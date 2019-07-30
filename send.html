@@ -1,4 +1,55 @@
 <script>
+console.log("main.js 's loads started'");
+async function getaddress() {
+  const address = await window.mpurse.getAddress();
+  return address;
+}
+window.onload = function() {
+  setTimeout(afterload, 500)
+};
+
+function output_address(address, toid) {
+  console.log(address)
+  document.getElementById(toid).innerHTML = address;
+}
+//raddress = returned address
+function afterload() {
+  getaddress().then((raddress) => {
+    output_address(raddress, "ownaddress")
+    getbalance(raddress)
+  })
+}
+// getbalance() fires extract_json_balance() and that fires output_balance() and result in output to DOM writing to id balance.
+function extract_json_balance(data) {
+  console.log("data:" + data)
+  output_balance(data["balance"])
+  return data["balance"]
+}
+
+function output_balance(balance) {
+  document.getElementById('balance').innerHTML = balance
+}
+
+function getbalance(address) {
+  var url = "https://mona.chainsight.info/api/addr/" + address + "/?noTxList=1"
+  console.log("ADDRESS " + address)
+  async function main() {
+    const json = await fetch(url).then(res => res.json())
+    return json
+  }
+  var data = main()
+  data.then((json) => console.log(json));
+  data.then((json) => extract_json_balance(json));
+
+  function send_asset(sendto, sendamount, memo, assetname = "MONA") {
+    console.log("function send_asset started.")
+    window.mpurse.sendAsset(sendto, assetname, sendamount, 'plain', memo)
+  }
+
+
+}
+</script>
+<script>
 function GetQueryString()
 {
     var result = {};
@@ -33,10 +84,6 @@ var from = query["from"]
 var asset = query["asset"]
 var memo = query["memo"]
 
-function send_asset(sendto, sendamount, memo, assetname = "MONA") {
-	console.log("function send_asset started.")
-	window.mpurse.sendAsset(sendto, assetname, sendamount, 'plain', memo)
-}
 
 send_asset(sendto, amount, memo)
 
