@@ -40,14 +40,14 @@ function getbalance(address) {
   var data = main()
   data.then((json) => console.log(json));
   data.then((json) => extract_json_balance(json));
-
-  function send_asset(sendto, sendamount, memo, assetname = "MONA") {
-    console.log("function send_asset started.")
-    window.mpurse.sendAsset(sendto, assetname, sendamount, 'plain', memo)
-  }
-
-
 }
+
+function send_asset(sendto, sendamount, memo, assetname = "MONA") {
+  console.log("function send_asset started.")
+  window.mpurse.sendAsset(sendto, assetname, sendamount, 'plain', memo)
+}
+
+
 </script>
 <script>
 function GetQueryString()
@@ -88,3 +88,5 @@ var memo = query["memo"]
 send_asset(sendto, amount, memo)
 
 </script>
+<div id="clientaddress">Your address: <a id="ownaddress"></a></div><br>
+<div id="clientbalance">Your balance: <a id="balance"></a> mona</div>
