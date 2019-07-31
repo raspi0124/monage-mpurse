@@ -1,0 +1,21 @@
+<h1>
+	Get your encoded address here and paste in to Monage!
+</h1>
+<script src="base64.js"></script>
+<script>
+	window.onload = function() {
+	  setTimeout(afterload, 500)
+	};
+	function afterload(){
+		async function getaddress() {
+		  const address = await window.mpurse.getAddress();
+		  return address;
+		}
+	getaddress().then((address) => {
+		faddress = Base64a.encode(address)
+		saddress = Base64a.encode(faddress)
+		console.log(saddress)
+		document.write(saddress)
+  })
+	}
+</script>
