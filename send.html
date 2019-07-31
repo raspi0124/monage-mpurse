@@ -8,15 +8,13 @@ window.onload = function() {
   setTimeout(afterload, 500)
 };
 
-function output_address(address, toid) {
-  console.log(address)
-  document.getElementById(toid).innerHTML = address;
-}
+
 //raddress = returned address
 function afterload() {
   getaddress().then((raddress) => {
     output_address(raddress, "ownaddress")
     getbalance(raddress)
+		showsend()
   })
 }
 // getbalance() fires extract_json_balance() and that fires output_balance() and result in output to DOM writing to id balance.
@@ -41,11 +39,15 @@ function getbalance(address) {
   data.then((json) => console.log(json));
   data.then((json) => extract_json_balance(json));
 }
-
+function output_address(address, toid) {
+  console.log(address)
+  document.getElementById(toid).innerHTML = address;
+}
 function send_asset(sendto, sendamount, memo, assetname = "MONA") {
   console.log("function send_asset started.")
   window.mpurse.sendAsset(sendto, assetname, sendamount, 'plain', memo)
 }
+
 
 
 </script>
@@ -77,15 +79,26 @@ function GetQueryString()
 }
 </script>
 <script>
+/**
 var query = GetQueryString()
 var sendto = query["sendto"]
 var amount = query["amount"]
 var from = query["from"]
 var asset = query["asset"]
 var memo = query["memo"]
+**/
+function showsend(){
+	var query = GetQueryString()
+	var sendto = query["sendto"]
+	var amount = query["amount"]
+	var from = query["from"]
+	var asset = query["asset"]
+	var memo = query["memo"]
+	tolog = query
+	console.log(tolog)
+	send_asset(sendto, amount, memo)
+}
 
-
-send_asset(sendto, amount, memo)
 
 </script>
 <div id="clientaddress">Your address: <a id="ownaddress"></a></div><br>
