@@ -14,9 +14,9 @@ console.log("Process started")
 		}
 	getaddress().then((address) => {
 		console.log(address)
-		faddress = encodeBase64(address)
+		faddress = Base64.encode(address)
 		console.log(faddress)
-		saddress = encodeBase64(faddress)
+		saddress = Base64.encode(faddress)
 		console.log(saddress)
 		document.write(saddress)
   })
